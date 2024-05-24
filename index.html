@@ -7,6 +7,11 @@
 </head>
 <body>
     <script>
+	
+	    function getUrlParameter(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
         async function fetchData() {
             try {
                 // Fetch guildId and roleName from URL
@@ -19,7 +24,7 @@
                 }
 
                 // Fetch text file data from the server
-                const response = await fetch(`https://scarlet-sprinkle-weaver.glitch.me/list-members?guildId=${guildId}&roleName=${roleName}`);
+                const response = await fetch(`https://your-server-url.com/list-members?guildId=${guildId}&roleName=${roleName}`);
                 
                 if (!response.ok) {
                     throw new Error('Failed to fetch data.');
@@ -44,4 +49,4 @@
 
 
 
-            
+            fetch(`https://scarlet-sprinkle-weaver.glitch.me/list-members?guildId=${guildId}&roleName=${roleName}`)
