@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch Guild Members</title>
+</head>
+<body>
+    <h1>Fetch Guild Members</h1>
+    <form id="guildForm" action="https://scarlet-sprinkle-weaver.glitch.me/list-members" method="get">
+        <label for="guildId">Guild ID:</label>
+        <input type="text" id="guildId" name="guildId" required><br><br>
+        
+        <label for="roleName">Role Name:</label>
+        <input type="text" id="roleName" name="roleName" required><br><br>
+        
+        <button type="submit">Get Members</button>
+    </form>
+
+    <script>
+        document.getElementById('guildForm').addEventListener('submit', function(event) {
+            const guildId = document.getElementById('guildId').value;
+            const roleName = document.getElementById('roleName').value;
+
+            if (!guildId || !roleName) {
+                alert('Please enter both Guild ID and Role Name.');
+                event.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>
