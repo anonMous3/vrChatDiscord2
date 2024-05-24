@@ -3,43 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fetch Guild Members</title>
+    <title>Fetch Text File</title>
 </head>
 <body>
+    <script>
+        // Function to get URL parameters
+        function getUrlParameter(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
 
-<script>
-    // Function to get URL parameters
-    function getUrlParameter(name) {
-        const urlParams = new URLSearchParams(window.location.search);
-        return urlParams.get(name);
-    }
+        // Fetch guildId and roleName from URL
+        const guildId = getUrlParameter('guildId');
+        const roleName = getUrlParameter('roleName');
 
-    // Fetch data using URL parameters
-    const guildId = getUrlParameter('guildId');
-    const roleName = getUrlParameter('roleName');
-
-    if (guildId && roleName) {
-        fetch(`https://scarlet-sprinkle-weaver.glitch.me/list-members?guildId=${guildId}&roleName=${roleName}`)
-            .then(response => response.text())
-            .then(data => {
-                // Write the server response directly to the document
-                document.open();
-                document.write(data);
-                document.close();
-            })
-            .catch(error => {
-                console.error('Error fetching data:', error);
-                document.open();
-                document.write('Error fetching data.');
-                document.close();
-            });
-    } else {
-        console.error('Missing guildId or roleName parameter.');
-        document.open();
-        document.write('Missing guildId or roleName parameter.');
-        document.close();
-    }
-</script>
-
+        // Check if guildId and roleName are provided
+        if (guildId && roleName) {
+            // Fetch text file data from the server
+            fetch(`https://your-server-url.com/list-members?guildId=${guildId}&roleName=${roleName}`)
+                .then(response => response.text())
+                .then(data => {
+                    // Create a new Blob object containing the text data
+                    const blob = new Blob([data], { type: 'text/plain' });
+                    // Create a link element
+                    const link = document.createElement('a');
+                    // Set the href attribute to a URL created from the Blob object
+                    link.href = URL.createObjectURL(blob);
+                    // Set the download attribute to specify the filename for the downloaded file
+                    link.download = 'members.txt';
+                    // Append the link to the document body
+                    document.body.appendChild(link);
+                    // Programmatically trigger a click event on the link to initiate the download
+                    link.click();
+                    // Remove the link from the document body
+                    document.body.removeChild(link);
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                    alert('Error fetching data.');
+                });
+        } else {
+            console.error('Missing guildId or roleName parameter in URL.');
+            alert('Missing guildId or roleName parameter in URL.');
+        }
+    </script>
 </body>
 </html>
